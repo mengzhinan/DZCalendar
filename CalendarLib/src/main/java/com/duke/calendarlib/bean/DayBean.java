@@ -8,21 +8,25 @@ package com.duke.calendarlib.bean;
 public class DayBean {
 
     // 当天日期的数字形式
-    public int dayNumber;
+    private int dayNumber;
+
+    // 一个月中的第几个星期
+    private int weekNumber;
 
     // 当天日期的毫秒数，忽略时分秒部分数据
-    public long dayMilliseconds;
+    private long dayMilliseconds;
 
     // 当天的日期在这周中是第几天
-    public int dayNumberInWeek;
+    private int dayNumberInWeek;
 
     // 是否是当月的日期(用于区分月头月末处的日期)
-    public boolean isInCurrentMonth;
+    private boolean isInCurrentMonth;
 
     // 是否是当天日期
-    public boolean isEqualCurrentDay;
+    private boolean isEqualCurrentDay;
 
     // 是否是过期的日期(是否超过当天的日期)
+    private boolean isOverdueDay;
 
     public int getDayNumber() {
         return dayNumber;
@@ -72,7 +76,11 @@ public class DayBean {
         isOverdueDay = overdueDay;
     }
 
-    public boolean isOverdueDay;
+    public int getWeekNumber() {
+        return weekNumber;
+    }
 
-
+    public void setWeekNumber(int weekNumber) {
+        this.weekNumber = weekNumber;
+    }
 }

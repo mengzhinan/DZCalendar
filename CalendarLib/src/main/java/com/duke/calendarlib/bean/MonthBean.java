@@ -10,9 +10,9 @@ import java.util.ArrayList;
 public class MonthBean {
 
     // 当前约月数，月份默认是0-11
-    public int monthNumber;
+    private int monthNumber;
 
-    public ArrayList<WeekBean> weekList;
+    private ArrayList<DayBean[]> dayArrayList;
 
     public int getMonthNumber() {
         return monthNumber;
@@ -22,11 +22,11 @@ public class MonthBean {
         this.monthNumber = monthNumber;
     }
 
-    public ArrayList<WeekBean> getWeekList() {
-        return weekList;
+    public ArrayList<DayBean[]> getDayArrayList() {
+        return dayArrayList;
     }
 
-    public void setWeekList(ArrayList<WeekBean> weekList) {
-        this.weekList = weekList;
+    public void setDayArrayList(ArrayList<DayBean[]> dayArrayList) {
+        this.dayArrayList = dayArrayList;
     }
 }

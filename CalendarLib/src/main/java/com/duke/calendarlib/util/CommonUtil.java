@@ -1,7 +1,5 @@
 package com.duke.calendarlib.util;
 
-import java.util.Calendar;
-
 /**
  * @ Author: duke
  * @ DateTime: 2019-01-12 15:22
@@ -9,6 +7,8 @@ import java.util.Calendar;
  */
 public class CommonUtil {
 
-
+    public static boolean isEmpty(String text) {
+        return (text == null || "".equals(text.trim()));
+    }
 
 }
