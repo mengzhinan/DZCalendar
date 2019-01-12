@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         MonthBean monthBean = CalendarDataSource.getMonthBean(System.currentTimeMillis());
+
+
         Log.v("test","test");
     }
 }
