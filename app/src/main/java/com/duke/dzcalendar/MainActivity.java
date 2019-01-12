@@ -3,10 +3,9 @@ package com.duke.dzcalendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.duke.calendarlib.bean.MonthBean;
-import com.duke.calendarlib.util.DataUtil;
+import com.duke.calendarlib.core.CalendarDataSource;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        MonthBean monthBean = DataUtil.getMonthBean(System.currentTimeMillis());
+        MonthBean monthBean = CalendarDataSource.getMonthBean(System.currentTimeMillis());
         Log.v("test","test");
     }
 }

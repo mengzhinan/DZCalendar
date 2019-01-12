@@ -1,7 +1,8 @@
-package com.duke.calendarlib.util;
+package com.duke.calendarlib.core;
 
 import com.duke.calendarlib.bean.DayBean;
 import com.duke.calendarlib.bean.MonthBean;
+import com.duke.calendarlib.util.CalendarUtil;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  * @ DateTime: 2019-01-12 14:28
  * @ Description: 构造月份中的 日 数据
  */
-public class DataUtil {
+public class CalendarDataSource {
 
     /**
      * 获取对应月份的数据
@@ -28,7 +29,7 @@ public class DataUtil {
 
     private static ArrayList<DayBean[]> getDayArrayList(long timeMillis) {
         // 获取当前月的星期数
-        int weeksOfMonth = CalendarUtil.getWeekNumberOfMonth(timeMillis);
+        int weeksOfMonth = CalendarUtil.getTotalWeeksOfMonth(timeMillis);
         ArrayList<DayBean[]> dayArrayList = new ArrayList<>(weeksOfMonth);
         // 获取当前月份的总天数
         int daysOfMonth = CalendarUtil.getDaysNumber(timeMillis);
@@ -42,17 +43,20 @@ public class DataUtil {
         }
         // 天数标记值
         int dayIndex = 1;
+        // 记录 week 数组的数量
+        int weekNumber = 1;
         DayBean[] dayWeekArray = new DayBean[7];
         // 记录当前月第一个星期数组对象
         DayBean[] startDayWeekArray = dayWeekArray;
         dayArrayList.add(dayWeekArray);
         do {
-            dayWeekArray[weekIndex] = getDayBean(timeMillis, dayIndex, true);
+            dayWeekArray[weekIndex] = getDayBean(timeMillis, dayIndex, true, weekNumber);
             dayIndex++;
             weekIndex++;
             if (weekIndex >= 7) {
                 // 一个星期的数据处理完成，切换到下一个星期
                 weekIndex = 0;
+                weekNumber++;
                 dayWeekArray = new DayBean[7];
                 dayArrayList.add(dayWeekArray);
             }
@@ -62,7 +66,7 @@ public class DataUtil {
         addPreviousMonthEndDays(startDayWeekArray, endEmptyIndex, timeMillis);
 
         // 处理月末的数据，即下一个月月初的几天数据，添加到当前月月末中
-        addNextMonthStartDays(dayWeekArray, timeMillis);
+        addNextMonthStartDays(dayWeekArray, timeMillis, weekNumber);
         return dayArrayList;
     }
 
@@ -70,7 +74,7 @@ public class DataUtil {
         // 获取上一个月的总天数
         int previousMonthDays = CalendarUtil.getPreviousMonthDaysNumber(timeMillis);
         for (int i = endEmptyIndex; i >= 0; i--) {
-            dayWeekArray[i] = getDayBean(timeMillis, previousMonthDays, false);
+            dayWeekArray[i] = getDayBean(timeMillis, previousMonthDays, false, 1);
             previousMonthDays--;
         }
     }
@@ -81,21 +85,24 @@ public class DataUtil {
      * @param dayWeekArray
      * @param timeMillis
      */
-    private static void addNextMonthStartDays(DayBean[] dayWeekArray, long timeMillis) {
+    private static void addNextMonthStartDays(DayBean[] dayWeekArray, long timeMillis, int weekNumber) {
         int nextMonthDayIndex = 1;
         // dayWeekArray 数组就是当前月最后一个星期的数组
         for (int i = 0; i < dayWeekArray.length; i++) {
             if (dayWeekArray[i] != null) {
                 continue;
             }
-            dayWeekArray[i] = getDayBean(timeMillis, nextMonthDayIndex, false);
+            dayWeekArray[i] = getDayBean(timeMillis, nextMonthDayIndex, false, weekNumber);
             nextMonthDayIndex++;
         }
     }
 
-    private static DayBean getDayBean(long timeMillis, int dayNumber, boolean isInCurrentMonth) {
-        DayBean dayBean = null;
-        // TODO: 2019/1/12
+    private static DayBean getDayBean(long timeMillis, int dayNumber, boolean isInCurrentMonth, int weekNumber) {
+        DayBean dayBean = new DayBean();
+        dayBean.setDayMilliseconds(CalendarUtil.getSomeDayTimeMillis(timeMillis, dayNumber));
+        dayBean.setDayNumber(dayNumber);
+        dayBean.setWeekNumber(weekNumber);
+        dayBean.setInCurrentMonth(isInCurrentMonth);
         return dayBean;
     }
 }

@@ -23,13 +23,23 @@ public class CalendarUtil {
     }
 
     /**
-     * 获取一个月中的星期总数
+     * 获取当前日期是一个月中的第几个星期
      *
      * @param timeMillis
      * @return
      */
-    public static int getWeekNumberOfMonth(long timeMillis) {
-        return getNumberOf(getSomeDayTimeMillis(timeMillis, getDaysNumber(timeMillis)), Calendar.WEEK_OF_MONTH);
+    public static int getWeekNumberOfMonth(long timeMillis, int dayNumber) {
+        return getNumberOf(getSomeDayTimeMillis(timeMillis, dayNumber), Calendar.WEEK_OF_MONTH);
+    }
+
+    /**
+     * 获取当前月总共的星期数量
+     *
+     * @param timeMillis
+     * @return
+     */
+    public static int getTotalWeeksOfMonth(long timeMillis) {
+        return getWeekNumberOfMonth(timeMillis, getDaysNumber(timeMillis));
     }
 
     /**
