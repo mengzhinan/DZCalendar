@@ -55,6 +55,9 @@ public class CalendarDataSource {
         // 处理月头部分日期(上个月月末的天数)
         addPreviousMonthEndDays(dayList, headEmptyIndex, timeMillis);
 
+        // 下一个月1号对应的最后一个星期的索引
+        int nextMonthWeekIndex = listPosition + daysOfMonth;
+
         // 天数标记值
         int dayIndex = 1;
         // 记录 week 数组的数量
@@ -64,15 +67,16 @@ public class CalendarDataSource {
             dayBean = getDayBean(timeMillis, dayIndex, true, weekNumber);
             dayList.add(dayBean);
             dayIndex++;
-            weekNumber++;
+            listPosition++;
             if (listPosition % 7 == 0) {
+                listPosition = 0;
                 // 一个星期的数据处理完成，切换到下一个星期
-                weekNumber = 0;
+                weekNumber++;
             }
         } while (dayIndex <= daysOfMonth);
 
         // 处理月末的数据，即下一个月月初的几天数据，添加到当前月月末中
-        addNextMonthStartDays(dayList, timeMillis, listPosition + daysOfMonth, weeksOfMonth);
+        addNextMonthStartDays(dayList, timeMillis, nextMonthWeekIndex, weeksOfMonth);
 
         return dayList;
     }
