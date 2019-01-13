@@ -1,4 +1,4 @@
-package com.duke.calendarlib.util;
+package com.duke.calendarlib.core;
 
 import java.util.Calendar;
 
