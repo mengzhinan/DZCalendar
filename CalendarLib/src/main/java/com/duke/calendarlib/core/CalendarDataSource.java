@@ -94,6 +94,7 @@ public class CalendarDataSource {
         for (int i = previousMonthWeekStart; i <= previousMonthDays; i++) {
             dayBean = getDayBean(timeMillis, i, false, 1);
             dayBean.setWeekEnd(CalendarUtil.isWeekEnd(CalendarUtil.getPreviousMonthTimeMillis(timeMillis), i));
+            dayBean.setDayMilliseconds(CalendarUtil.getSomeDayTimeMillis(CalendarUtil.getPreviousMonthTimeMillis(timeMillis), i));
             dayList.add(dayBean);
         }
     }
@@ -108,6 +109,7 @@ public class CalendarDataSource {
         DayBean dayBean;
         for (int i = startIndex; i < totalWeekNumber * 7; i++) {
             dayBean = getDayBean(timeMillis, nextMonthDayIndex, false, totalWeekNumber);
+            dayBean.setDayMilliseconds(CalendarUtil.getSomeDayTimeMillis(CalendarUtil.getNextMonthTimeMillis(timeMillis), nextMonthDayIndex));
             dayBean.setWeekEnd(CalendarUtil.isWeekEnd(CalendarUtil.getNextMonthTimeMillis(timeMillis), nextMonthDayIndex));
             dayList.add(dayBean);
             nextMonthDayIndex++;

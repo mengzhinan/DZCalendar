@@ -61,7 +61,8 @@ public class HolidayUtil {
             String monthStr = month < 10 ? ("0" + month) : ("" + month);
             JSONArray jsonArray = holidayJSONObject.optJSONArray(year + monthStr);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
-            int value = jsonArray.optInt(day);
+            // 日期范围是 1~31，数组范围是0~30
+            int value = jsonArray.optInt(day - 1);
 
             if (value == HolidayType.REST.getIntValue()) {
                 return HolidayType.REST;
