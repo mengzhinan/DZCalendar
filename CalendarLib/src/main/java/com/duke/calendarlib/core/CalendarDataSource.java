@@ -90,8 +90,11 @@ public class CalendarDataSource {
         // 获取上一个月的总天数 - (这个月月头的空缺位置) = 当前月第一个星期的第一个index对应上个月的哪一天
         int previousMonthDays = CalendarUtil.getPreviousMonthDaysNumber(timeMillis);
         int previousMonthWeekStart = previousMonthDays - headEmptyIndex;
+        DayBean dayBean;
         for (int i = previousMonthWeekStart; i <= previousMonthDays; i++) {
-            dayList.add(getDayBean(timeMillis, i, false, 1));
+            dayBean = getDayBean(timeMillis, i, false, 1);
+            dayBean.setWeekEnd(CalendarUtil.isWeekEnd(CalendarUtil.getPreviousMonthTimeMillis(timeMillis), i));
+            dayList.add(dayBean);
         }
     }
 
@@ -102,8 +105,11 @@ public class CalendarDataSource {
      */
     private static void addNextMonthStartDays(ArrayList<DayBean> dayList, long timeMillis, int startIndex, int totalWeekNumber) {
         int nextMonthDayIndex = 1;
+        DayBean dayBean;
         for (int i = startIndex; i < totalWeekNumber * 7; i++) {
-            dayList.add(getDayBean(timeMillis, nextMonthDayIndex, false, totalWeekNumber));
+            dayBean = getDayBean(timeMillis, nextMonthDayIndex, false, totalWeekNumber);
+            dayBean.setWeekEnd(CalendarUtil.isWeekEnd(CalendarUtil.getNextMonthTimeMillis(timeMillis), nextMonthDayIndex));
+            dayList.add(dayBean);
             nextMonthDayIndex++;
         }
     }
@@ -113,6 +119,7 @@ public class CalendarDataSource {
         dayBean.setDayMilliseconds(CalendarUtil.getSomeDayTimeMillis(timeMillis, dayNumber));
         dayBean.setDayNumber(dayNumber);
         dayBean.setWeekNumber(weekNumber);
+        dayBean.setWeekEnd(CalendarUtil.isWeekEnd(timeMillis, dayNumber));
         dayBean.setInCurrentMonth(isInCurrentMonth);
         return dayBean;
     }

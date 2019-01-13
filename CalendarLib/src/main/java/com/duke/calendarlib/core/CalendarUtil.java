@@ -57,6 +57,19 @@ public class CalendarUtil {
         return calendar.getTimeInMillis();
     }
 
+    /**
+     * 判断当前日期是否是周末
+     *
+     * @param timeMillis
+     * @param dayNumber
+     * @return
+     */
+    public static boolean isWeekEnd(long timeMillis, int dayNumber) {
+        timeMillis = getSomeDayTimeMillis(timeMillis, dayNumber);
+        int week = getDayNumberOfWeekIndex(timeMillis);
+        return week == Calendar.SUNDAY || week == Calendar.SATURDAY;
+    }
+
     public static long getPreviousMonthTimeMillis(long timeMillis) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timeMillis);

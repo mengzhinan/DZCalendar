@@ -10,6 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.duke.calendarlib.R;
+import com.duke.calendarlib.core.HolidayType;
+import com.duke.calendarlib.core.HolidayUtil;
 import com.duke.calendarlib.core.bean.DayBean;
 import com.duke.calendarlib.core.bean.MonthBean;
 
@@ -39,6 +41,16 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.Holder> {
         DayBean dayBean = monthBean.getDayList().get(i);
         holder.dayTextView.setText(String.valueOf(dayBean.getDayNumber()));
         holder.subDayTextView.setVisibility(View.GONE);
+        HolidayType type = HolidayUtil.getInstance(holder.root.getContext()).getHolidayOfSomeDay(dayBean.getDayMilliseconds());
+        holder.holidayImageView.setVisibility(View.VISIBLE);
+        if (type == HolidayType.REST) {
+            holder.holidayImageView.setImageResource(R.drawable.ic_rest_day);
+        } else if (type == HolidayType.WORK) {
+            holder.holidayImageView.setImageResource(R.drawable.ic_work_day);
+        } else {
+            holder.holidayImageView.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

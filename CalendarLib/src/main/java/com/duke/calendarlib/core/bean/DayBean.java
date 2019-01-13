@@ -17,6 +17,8 @@ public class DayBean {
     private int weekNumber;
     // 是否是当月的日期(用于区分月头月末处的日期)
     private boolean isInCurrentMonth;
+    // 是否是周末
+    private boolean isWeekEnd;
 
     @NonNull
     @Override
@@ -58,5 +60,13 @@ public class DayBean {
 
     public void setInCurrentMonth(boolean inCurrentMonth) {
         isInCurrentMonth = inCurrentMonth;
+    }
+
+    public boolean isWeekEnd() {
+        return isWeekEnd;
+    }
+
+    public void setWeekEnd(boolean weekEnd) {
+        isWeekEnd = weekEnd;
     }
 }
