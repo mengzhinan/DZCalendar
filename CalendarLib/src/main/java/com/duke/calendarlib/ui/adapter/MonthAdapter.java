@@ -36,19 +36,17 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.Holder> {
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int i) {
-        int line = i / 7;
-        int index = i % 7;
-        DayBean dayBean = monthBean.getDayArrayList().get(line)[index];
+        DayBean dayBean = monthBean.getDayList().get(i);
         holder.dayTextView.setText(String.valueOf(dayBean.getDayNumber()));
         holder.subDayTextView.setVisibility(View.GONE);
     }
 
     @Override
     public int getItemCount() {
-        if (monthBean == null || monthBean.getDayArrayList() == null) {
+        if (monthBean == null || monthBean.getDayList() == null) {
             return 0;
         }
-        return monthBean.getDayArrayList().size() * 7;
+        return monthBean.getDayList().size();
     }
 
     public static class Holder extends RecyclerView.ViewHolder {

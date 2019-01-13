@@ -11,8 +11,17 @@ public class MonthBean {
 
     // 当前约月数，月份默认是0-11
     private int monthNumber;
+    private ArrayList<DayBean> dayList;
+    // 保存当月的天数
+    private int currentMonthDays;
 
-    private ArrayList<DayBean[]> dayArrayList;
+    public int getCurrentMonthDays() {
+        return currentMonthDays;
+    }
+
+    public void setCurrentMonthDays(int currentMonthDays) {
+        this.currentMonthDays = currentMonthDays;
+    }
 
     public int getMonthNumber() {
         return monthNumber;
@@ -22,11 +31,11 @@ public class MonthBean {
         this.monthNumber = monthNumber;
     }
 
-    public ArrayList<DayBean[]> getDayArrayList() {
-        return dayArrayList;
+    public ArrayList<DayBean> getDayList() {
+        return dayList;
     }
 
-    public void setDayArrayList(ArrayList<DayBean[]> dayArrayList) {
-        this.dayArrayList = dayArrayList;
+    public void setDayList(ArrayList<DayBean> dayList) {
+        this.dayList = dayList;
     }
 }
