@@ -30,6 +30,7 @@ public class MonthActivity extends AppCompatActivity {
         adapter = new MonthViewPagerAdapter(getSupportFragmentManager(), fragmentArrayList);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(currentMonthIndex);
+        viewPager.setOffscreenPageLimit(3);
     }
 
     private void initData(int yearStart, int yearEnd) {
