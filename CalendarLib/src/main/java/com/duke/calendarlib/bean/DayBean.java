@@ -9,10 +9,10 @@ import android.support.annotation.NonNull;
  */
 public class DayBean {
 
-    // 当天日期的毫秒数，忽略时分秒部分数据
-    private long dayMilliseconds;
     // 当天日期的数字形式
     private int dayNumber;
+    // 当天日期的毫秒数，忽略时分秒部分数据
+    private long dayMilliseconds;
     // 一个月中的第几个星期
     private int weekNumber;
     // 是否是当月的日期(用于区分月头月末处的日期)
