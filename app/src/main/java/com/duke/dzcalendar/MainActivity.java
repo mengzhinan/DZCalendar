@@ -1,11 +1,10 @@
 package com.duke.dzcalendar;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 
-import com.duke.calendarlib.bean.MonthBean;
-import com.duke.calendarlib.core.CalendarDataSource;
+import com.duke.calendarlib.ui.activity.MonthActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,10 +17,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        MonthBean monthBean = CalendarDataSource.getMonthBean(System.currentTimeMillis());
-
-
-        Log.v("test","test");
+        startActivity(new Intent(this, MonthActivity.class));
     }
 }
