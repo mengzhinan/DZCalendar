@@ -3,10 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.duke.calendarlib.ui.widget.MonthHeadLayout
+        android:id="@+id/month_header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/duke_calendar_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/month_header_layout" />
 
 </RelativeLayout>
