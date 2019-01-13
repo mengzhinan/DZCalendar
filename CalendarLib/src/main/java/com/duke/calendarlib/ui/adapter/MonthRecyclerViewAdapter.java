@@ -10,23 +10,24 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.duke.calendarlib.R;
-import com.duke.calendarlib.core.HolidayType;
-import com.duke.calendarlib.core.HolidayUtil;
 import com.duke.calendarlib.core.bean.DayBean;
 import com.duke.calendarlib.core.bean.MonthBean;
+import com.duke.calendarlib.core.enums.HolidayType;
+import com.duke.calendarlib.core.util.HolidayUtil;
 
 /**
  * @ Author: duke
  * @ DateTime: 2019-01-12 22:21
  * @ Description:
  */
-public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.Holder> {
+public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecyclerViewAdapter.Holder> {
     private MonthBean monthBean;
     private int recyclerViewWidth;
 
     public void setData(MonthBean monthBean, int recyclerViewWidth) {
         this.monthBean = monthBean;
         this.recyclerViewWidth = recyclerViewWidth;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -60,13 +61,13 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.Holder> {
         return monthBean.getDayList().size();
     }
 
-    public static class Holder extends RecyclerView.ViewHolder {
+    static class Holder extends RecyclerView.ViewHolder {
         private RelativeLayout root;
         private TextView dayTextView; // 阳历日期文本显示
         private TextView subDayTextView; // 农历或节日文本显示
         private ImageView holidayImageView; // 休班标记
 
-        public Holder(@NonNull View view, int length) {
+        Holder(@NonNull View view, int length) {
             super(view);
             root = view.findViewById(R.id.duke_calendar_day_view_root);
             dayTextView = view.findViewById(R.id.duke_calendar_day_text);

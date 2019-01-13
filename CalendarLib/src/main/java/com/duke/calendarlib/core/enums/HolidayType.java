@@ -1,4 +1,4 @@
-package com.duke.calendarlib.core;
+package com.duke.calendarlib.core.enums;
 
 /**
  * @ Author: duke

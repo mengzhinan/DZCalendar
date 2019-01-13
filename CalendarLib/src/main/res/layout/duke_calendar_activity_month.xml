@@ -8,8 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/duke_calendar_recycler_view"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/month_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/month_header_layout" />

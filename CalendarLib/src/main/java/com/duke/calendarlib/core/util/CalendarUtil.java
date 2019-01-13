@@ -1,4 +1,4 @@
-package com.duke.calendarlib.core;
+package com.duke.calendarlib.core.util;
 
 import java.util.Calendar;
 
@@ -126,6 +126,13 @@ public class CalendarUtil {
 
     public static int getNextMonthDaysNumber(long timeMillis) {
         return getDaysNumber(getNextMonthTimeMillis(timeMillis));
+    }
+
+    public static long getMonthTimeMillis(int year, int month) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        return calendar.getTimeInMillis();
     }
 
     /**

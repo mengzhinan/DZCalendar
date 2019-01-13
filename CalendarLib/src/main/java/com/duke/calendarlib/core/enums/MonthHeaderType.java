@@ -1,11 +1,11 @@
-package com.duke.calendarlib.core;
+package com.duke.calendarlib.core.enums;
 
 /**
  * @ Author: duke
  * @ DateTime: 2019-01-13 14:28
  * @ Description:
  */
-public enum MonthHeader {
+public enum MonthHeaderType {
 
     SUNDAY(1, "sun", "sunday", "日", "周日", "星期日"),
     MONDAY(2, "mon", "monday", "一", "周一", "星期一"),
@@ -46,8 +46,8 @@ public enum MonthHeader {
         return chineseFullName;
     }
 
-    MonthHeader(int intValue, String englishShortName, String englishFullName,
-                String chineseNumber, String chineseShortName, String chineseFullName) {
+    MonthHeaderType(int intValue, String englishShortName, String englishFullName,
+                    String chineseNumber, String chineseShortName, String chineseFullName) {
         this.intValue = intValue;
         this.englishShortName = englishShortName;
         this.englishFullName = englishFullName;

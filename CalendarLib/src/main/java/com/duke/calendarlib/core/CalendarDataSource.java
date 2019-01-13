@@ -2,6 +2,8 @@ package com.duke.calendarlib.core;
 
 import com.duke.calendarlib.core.bean.DayBean;
 import com.duke.calendarlib.core.bean.MonthBean;
+import com.duke.calendarlib.core.enums.MonthHeaderType;
+import com.duke.calendarlib.core.util.CalendarUtil;
 
 import java.util.ArrayList;
 
@@ -17,14 +19,14 @@ public class CalendarDataSource {
      *
      * @return
      */
-    public static MonthHeader[] getMonthHeaders() {
-        return new MonthHeader[]{MonthHeader.SUNDAY,
-                MonthHeader.MONDAY,
-                MonthHeader.TUESDAY,
-                MonthHeader.WEDNESDAY,
-                MonthHeader.THURSDAY,
-                MonthHeader.FRIDAY,
-                MonthHeader.SATURDAY};
+    public static MonthHeaderType[] getMonthHeaderEnums() {
+        return new MonthHeaderType[]{MonthHeaderType.SUNDAY,
+                MonthHeaderType.MONDAY,
+                MonthHeaderType.TUESDAY,
+                MonthHeaderType.WEDNESDAY,
+                MonthHeaderType.THURSDAY,
+                MonthHeaderType.FRIDAY,
+                MonthHeaderType.SATURDAY};
     }
 
     /**

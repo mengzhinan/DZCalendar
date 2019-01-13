@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.MonthFragment">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.duke.calendarlib.ui.widget.MonthHeadLayout
+        android:id="@+id/month_header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50" />
+
+    <com.duke.calendarlib.ui.widget.MonthLayout
+        android:id="@+id/month_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_below="@+id/month_header_layout" />
 
-</FrameLayout>
+</RelativeLayout>

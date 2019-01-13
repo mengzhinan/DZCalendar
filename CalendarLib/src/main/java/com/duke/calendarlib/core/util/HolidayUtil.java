@@ -1,6 +1,8 @@
-package com.duke.calendarlib.core;
+package com.duke.calendarlib.core.util;
 
 import android.content.Context;
+
+import com.duke.calendarlib.core.enums.HolidayType;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

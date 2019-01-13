@@ -1,53 +1,37 @@
 package com.duke.calendarlib.ui.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.duke.calendarlib.R;
+import com.duke.calendarlib.ui.widget.MonthHeadLayout;
+import com.duke.calendarlib.ui.widget.MonthLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MonthFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MonthFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MonthFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
+    private static final String MONTH_TIME_MILLIS = "month_time_millis";
+    private static final String IS_SHOW_HEADER_VIEW = "is_show_header_view";
+    private long monthTimeMillis;
+    private boolean isShowHeaderView;
+    private MonthLayout monthLayout;
+    private MonthHeadLayout monthHeadLayout;
 
     public MonthFragment() {
-        // Required empty public constructor
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MonthFragment.
+     * @param timeMillis     某月任意时间的毫秒数
+     * @param isShowHeadView 是否显示日历表头
+     * @return
      */
-    // TODO: Rename and change types and number of parameters
-    public static MonthFragment newInstance(String param1, String param2) {
+    public static MonthFragment newInstance(long timeMillis, boolean isShowHeadView) {
         MonthFragment fragment = new MonthFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putLong(MONTH_TIME_MILLIS, timeMillis);
+        args.putBoolean(IS_SHOW_HEADER_VIEW, isShowHeadView);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,54 +40,26 @@ public class MonthFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            monthTimeMillis = getArguments().getLong(MONTH_TIME_MILLIS);
+            isShowHeaderView = getArguments().getBoolean(IS_SHOW_HEADER_VIEW, false);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.duke_calendar_fragment_month, container, false);
+        View view = inflater.inflate(R.layout.duke_calendar_fragment_month, container, false);
+        monthHeadLayout = view.findViewById(R.id.month_header_layout);
+        monthLayout = view.findViewById(R.id.month_layout);
+        monthLayout.setData(monthTimeMillis);
+        monthHeadLayout.setVisibility(isShowHeaderView ? View.VISIBLE : View.GONE);
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    public MonthHeadLayout getMonthHeadLayout() {
+        if (isShowHeaderView) {
+            return monthHeadLayout;
         }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        return null;
     }
 }
