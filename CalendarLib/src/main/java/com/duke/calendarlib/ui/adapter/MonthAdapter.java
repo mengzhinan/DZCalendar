@@ -50,7 +50,6 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.Holder> {
         } else {
             holder.holidayImageView.setVisibility(View.GONE);
         }
-
     }
 
     @Override
