@@ -50,11 +50,10 @@ public class CalendarDataSource {
         monthBean.setCurrentMonthDays(daysOfMonth);
         // 获取当前月的1号是星期几(1-7)(数组索引是从0开始的)
         int listPosition = CalendarUtil.getFirstDayOfWeekIndex(timeMillis) - 1;
+
         int headEmptyIndex = listPosition - 1;
         // 处理月头部分日期(上个月月末的天数)
         addPreviousMonthEndDays(dayList, headEmptyIndex, timeMillis);
-        // 处理月末的数据，即下一个月月初的几天数据，添加到当前月月末中
-        addNextMonthStartDays(dayList, timeMillis, listPosition + daysOfMonth, weeksOfMonth);
 
         // 天数标记值
         int dayIndex = 1;
@@ -65,12 +64,16 @@ public class CalendarDataSource {
             dayBean = getDayBean(timeMillis, dayIndex, true, weekNumber);
             dayList.add(dayBean);
             dayIndex++;
-            listPosition++;
-            if (listPosition >= 7) {
+            weekNumber++;
+            if (listPosition % 7 == 0) {
                 // 一个星期的数据处理完成，切换到下一个星期
-                weekNumber++;
+                weekNumber = 0;
             }
         } while (dayIndex <= daysOfMonth);
+
+        // 处理月末的数据，即下一个月月初的几天数据，添加到当前月月末中
+        addNextMonthStartDays(dayList, timeMillis, listPosition + daysOfMonth, weeksOfMonth);
+
         return dayList;
     }
 
@@ -80,11 +83,11 @@ public class CalendarDataSource {
             // 避免当前月初无空缺日期的情况，无需添加上一个月月初的数据
             headEmptyIndex = 0;
         }
-        // 获取上一个月的总天数
+        // 获取上一个月的总天数 - (这个月月头的空缺位置) = 当前月第一个星期的第一个index对应上个月的哪一天
         int previousMonthDays = CalendarUtil.getPreviousMonthDaysNumber(timeMillis);
-        for (int i = headEmptyIndex; i >= 0; i--) {
-            dayList.set(i, getDayBean(timeMillis, previousMonthDays, false, 1));
-            previousMonthDays--;
+        int previousMonthWeekStart = previousMonthDays - headEmptyIndex;
+        for (int i = previousMonthWeekStart; i <= previousMonthDays; i++) {
+            dayList.add(getDayBean(timeMillis, i, false, 1));
         }
     }
 
@@ -96,7 +99,7 @@ public class CalendarDataSource {
     private static void addNextMonthStartDays(ArrayList<DayBean> dayList, long timeMillis, int startIndex, int totalWeekNumber) {
         int nextMonthDayIndex = 1;
         for (int i = startIndex; i < totalWeekNumber * 7; i++) {
-            dayList.set(i, getDayBean(timeMillis, nextMonthDayIndex, false, totalWeekNumber));
+            dayList.add(getDayBean(timeMillis, nextMonthDayIndex, false, totalWeekNumber));
             nextMonthDayIndex++;
         }
     }
