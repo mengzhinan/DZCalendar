@@ -1,4 +1,4 @@
-package com.duke.calendarlib.bean;
+package com.duke.calendarlib.core.bean;
 
 import java.util.ArrayList;
 

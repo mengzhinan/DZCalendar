@@ -10,8 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.duke.calendarlib.R;
-import com.duke.calendarlib.bean.DayBean;
-import com.duke.calendarlib.bean.MonthBean;
+import com.duke.calendarlib.core.bean.DayBean;
+import com.duke.calendarlib.core.bean.MonthBean;
 
 /**
  * @ Author: duke

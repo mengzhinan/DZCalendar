@@ -1,7 +1,7 @@
 package com.duke.calendarlib.core;
 
-import com.duke.calendarlib.bean.DayBean;
-import com.duke.calendarlib.bean.MonthBean;
+import com.duke.calendarlib.core.bean.DayBean;
+import com.duke.calendarlib.core.bean.MonthBean;
 
 import java.util.ArrayList;
 
