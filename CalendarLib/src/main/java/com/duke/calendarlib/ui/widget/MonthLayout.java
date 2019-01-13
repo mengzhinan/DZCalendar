@@ -39,6 +39,7 @@ public class MonthLayout extends LinearLayout {
         recyclerView.setLayoutManager(new GridLayoutManager(context, 7));
         monthAdapter = new MonthRecyclerViewAdapter();
         recyclerView.setAdapter(monthAdapter);
+        addView(view);
     }
 
     /**
