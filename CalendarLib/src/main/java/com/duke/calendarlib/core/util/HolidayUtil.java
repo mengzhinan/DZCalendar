@@ -45,7 +45,7 @@ public class HolidayUtil {
     }
 
     public static synchronized HolidayUtil getInstance(Context context) {
-        if (context == null || context.getResources() == null) {
+        if (context == null || context.getResources() == null || context.getResources().getAssets() == null) {
             throw new IllegalArgumentException("In HolidayUtil.java getInstance() param context is null");
         }
         if (instance == null) {

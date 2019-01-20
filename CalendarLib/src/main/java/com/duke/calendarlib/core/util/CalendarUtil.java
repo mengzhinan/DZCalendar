@@ -15,7 +15,7 @@ public class CalendarUtil {
      * @param timeMillis 当年任意时间的毫秒数
      * @return 是 或 否
      */
-    private static boolean isLeapYear(long timeMillis) {
+    public static boolean isLeapYear(long timeMillis) {
         return isLeapYear(getYearNumber(timeMillis));
     }
 
@@ -25,7 +25,7 @@ public class CalendarUtil {
      * @param year 年份数字
      * @return 是 或 否
      */
-    private static boolean isLeapYear(int year) {
+    public static boolean isLeapYear(int year) {
 //        给定一个年份，判断是否是闰年。满足条件之一：
 //        A：能被4整除，并且不能被100整除。
 //        或者
