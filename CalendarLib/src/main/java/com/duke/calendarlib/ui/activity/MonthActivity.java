@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.duke.calendarlib.R;
 import com.duke.calendarlib.ui.adapter.MonthViewPagerAdapter;
 import com.duke.calendarlib.ui.fragment.MonthFragment;
-import com.duke.calendarlib.ui.util.DataUtil;
+import com.duke.calendarlib.core.util.DataUtil;
 import com.duke.calendarlib.ui.widget.MonthHeadLayout;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class MonthActivity extends AppCompatActivity {
 
     private void initData(int yearStart, int yearEnd) {
         ArrayList<Long> monthTimeMillisList = new ArrayList<Long>((yearEnd - yearStart) * 12);
-        currentMonthIndex = DataUtil.getIndexAndComputeTimeMillisArray(monthTimeMillisList, yearStart, yearEnd);
+        currentMonthIndex = DataUtil.getTimeMillisArray(monthTimeMillisList, yearStart, yearEnd);
         int size = monthTimeMillisList.size();
         fragmentArrayList = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
