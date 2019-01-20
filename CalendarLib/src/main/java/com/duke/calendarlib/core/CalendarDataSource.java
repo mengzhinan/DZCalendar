@@ -17,7 +17,7 @@ public class CalendarDataSource {
     /**
      * 获取日历头文本枚举
      *
-     * @return
+     * @return 返回星期头部数据对象
      */
     public static MonthHeaderType[] getMonthHeaderEnums() {
         return new MonthHeaderType[]{MonthHeaderType.SUNDAY,
@@ -33,12 +33,11 @@ public class CalendarDataSource {
      * 获取对应月份的数据
      *
      * @param timeMillis 当前月份任意时间的毫秒数
-     * @return
+     * @return 返回月份数据对象
      */
     public static MonthBean getMonthBean(long timeMillis) {
         MonthBean monthBean = new MonthBean();
-        ArrayList<DayBean> dayList = getDayList(timeMillis, monthBean);
-        monthBean.setDayList(dayList);
+        monthBean.setDayList(getDayList(timeMillis, monthBean));
         monthBean.setMonthNumber(CalendarUtil.getMonthNumber(timeMillis));
         return monthBean;
     }
@@ -48,10 +47,10 @@ public class CalendarDataSource {
         int weeksOfMonth = CalendarUtil.getTotalWeeksOfMonth(timeMillis);
         ArrayList<DayBean> dayList = new ArrayList<>(weeksOfMonth * 7);
         // 获取当前月份的总天数
-        int daysOfMonth = CalendarUtil.getDaysNumber(timeMillis);
+        int daysOfMonth = CalendarUtil.getTotalDayNumbersOfMonth(timeMillis);
         monthBean.setCurrentMonthDays(daysOfMonth);
         // 获取当前月的1号是星期几(1-7)(数组索引是从0开始的)
-        int listPosition = CalendarUtil.getFirstDayOfWeekIndex(timeMillis) - 1;
+        int listPosition = CalendarUtil.getMonthFirstDayIndexInWeek(timeMillis) - 1;
 
         int headEmptyIndex = listPosition - 1;
         // 处理月头部分日期(上个月月末的天数)
@@ -62,19 +61,14 @@ public class CalendarDataSource {
 
         // 天数标记值
         int dayIndex = 1;
-        // 记录 week 数组的数量
-        int weekNumber = 1;
         DayBean dayBean;
+        int weekNumber;
         do {
+            weekNumber = CalendarUtil.getWeekNumberIndexOfMonth(timeMillis, dayIndex);
             dayBean = getDayBean(timeMillis, dayIndex, true, weekNumber);
+            dayBean.setWeekEnd(CalendarUtil.isWeekEnd(CalendarUtil.getTimeMillisByDayNumber(timeMillis, dayIndex)));
             dayList.add(dayBean);
             dayIndex++;
-            listPosition++;
-            if (listPosition % 7 == 0) {
-                listPosition = 0;
-                // 一个星期的数据处理完成，切换到下一个星期
-                weekNumber++;
-            }
         } while (dayIndex <= daysOfMonth);
 
         // 处理月末的数据，即下一个月月初的几天数据，添加到当前月月末中
@@ -90,13 +84,13 @@ public class CalendarDataSource {
             headEmptyIndex = 0;
         }
         // 获取上一个月的总天数 - (这个月月头的空缺位置) = 当前月第一个星期的第一个index对应上个月的哪一天
-        int previousMonthDays = CalendarUtil.getPreviousMonthDaysNumber(timeMillis);
+        int previousMonthDays = CalendarUtil.getPreviousMonthTotalDays(timeMillis);
         int previousMonthWeekStart = previousMonthDays - headEmptyIndex;
         DayBean dayBean;
         for (int i = previousMonthWeekStart; i <= previousMonthDays; i++) {
             dayBean = getDayBean(timeMillis, i, false, 1);
-            dayBean.setWeekEnd(CalendarUtil.isWeekEnd(CalendarUtil.getPreviousMonthTimeMillis(timeMillis), i));
-            dayBean.setDayMilliseconds(CalendarUtil.getSomeDayTimeMillis(CalendarUtil.getPreviousMonthTimeMillis(timeMillis), i));
+            dayBean.setDayMilliseconds(CalendarUtil.getTimeMillisOfPreviousMonth(timeMillis, i));
+            dayBean.setWeekEnd(CalendarUtil.isWeekEnd(dayBean.getDayMilliseconds()));
             dayList.add(dayBean);
         }
     }
@@ -104,15 +98,15 @@ public class CalendarDataSource {
     /**
      * 把下一个月月初的几天，添加到当前月的最后一个星期数组中
      *
-     * @param timeMillis
+     * @param timeMillis 当前毫秒数
      */
     private static void addNextMonthStartDays(ArrayList<DayBean> dayList, long timeMillis, int startIndex, int totalWeekNumber) {
         int nextMonthDayIndex = 1;
         DayBean dayBean;
         for (int i = startIndex; i < totalWeekNumber * 7; i++) {
             dayBean = getDayBean(timeMillis, nextMonthDayIndex, false, totalWeekNumber);
-            dayBean.setDayMilliseconds(CalendarUtil.getSomeDayTimeMillis(CalendarUtil.getNextMonthTimeMillis(timeMillis), nextMonthDayIndex));
-            dayBean.setWeekEnd(CalendarUtil.isWeekEnd(CalendarUtil.getNextMonthTimeMillis(timeMillis), nextMonthDayIndex));
+            dayBean.setDayMilliseconds(CalendarUtil.getTimeMillisOfNextMonth(timeMillis, nextMonthDayIndex));
+            dayBean.setWeekEnd(CalendarUtil.isWeekEnd(dayBean.getDayMilliseconds()));
             dayList.add(dayBean);
             nextMonthDayIndex++;
         }
@@ -120,10 +114,9 @@ public class CalendarDataSource {
 
     private static DayBean getDayBean(long timeMillis, int dayNumber, boolean isInCurrentMonth, int weekNumber) {
         DayBean dayBean = new DayBean();
-        dayBean.setDayMilliseconds(CalendarUtil.getSomeDayTimeMillis(timeMillis, dayNumber));
+        dayBean.setDayMilliseconds(CalendarUtil.getTimeMillisByDayNumber(timeMillis, dayNumber));
         dayBean.setDayNumber(dayNumber);
         dayBean.setWeekNumber(weekNumber);
-        dayBean.setWeekEnd(CalendarUtil.isWeekEnd(timeMillis, dayNumber));
         dayBean.setInCurrentMonth(isInCurrentMonth);
         return dayBean;
     }
